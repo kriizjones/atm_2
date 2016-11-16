@@ -1,6 +1,6 @@
 require './lib/atm.rb'
-describe Atm do
-  let(:account) { instance_double('Account') }
+  describe Atm do
+  let(:account) { class_double('Account', pin_code: '1234') }
   before do
     allow(account).to receive(:balance).and_return(100)
     allow(account).to receive(:balance=)
@@ -11,12 +11,28 @@ describe Atm do
   end
 
   it 'funds are reduced at withdraw' do
-    subject.withdraw 100, account
+    subject.withdraw 100, '1234', account
     expect(subject.funds).to eq 900
   end
 
   it 'allow withdraw if account has enough balance.' do
     expected_output = { status: true, message: 'success', date: Date.today, amount: 45 }
-    expect(subject.withdraw(45, account)).to eq expected_output
+    expect(subject.withdraw(45, '1234', account)).to eq expected_output
   end
+
+  it 'reject withdraw if account has insufficient funds' do
+    expected_output = { status: false, message: 'insufficient funds in account', date: Date.today }
+    expect(subject.withdraw(105, '1234', account)).to eq expected_output
+  end
+
+  it 'reject withdraw if atm has insufficient funds' do
+    subject.funds = 50
+    expected_output = { status: false, message: 'insufficient funds in atm', date: Date.today }
+    expect(subject.withdraw(100, '1234', account)).to eq expected_output
+  end
+  it 'reject withdraw if pin is wrong' do
+    expected_output = { status: false, message: 'wrong pin', date: Date.today }
+    expect(subject.withdraw(50, 9999, account)).to eq expected_output
+  end
+
 end
