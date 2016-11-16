@@ -7,14 +7,36 @@ class Atm
 
   def withdraw(amount, account)
     case
-    when amount > account.balance then
+    when insufficient_funds_in_account?(amount, account) then
       return
     else
-      @funds -= amount
-      account.balance -= amount
-      { status: true, message: 'success', date: Date.today, amount: amount}
-
+      perform_transaction(amount, account)
     end
     #@funds -= amount
   end
+
+
+  private
+  def insufficient_funds_in_account?(amount, account)
+    amount > account.balance
+  end
+
+  def perform_transaction(amount, account)
+    lower_atm_funds(amount)
+    deduct_funds_from_account(amount, account)
+    return_success_message(amount)
+  end
+
+  def lower_atm_funds(amount)
+    @funds -= amount
+  end
+
+  def deduct_funds_from_account(amount, account)
+    account.balance -= amount
+  end
+
+  def return_success_message(amount)
+    { status: true, message: 'success', date: Date.today, amount: amount}
+  end
+
 end
