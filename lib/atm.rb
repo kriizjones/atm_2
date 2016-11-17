@@ -17,8 +17,8 @@ class Atm
       { status: false, message: 'card expired', date: Date.today }
     else
       perform_transaction(amount, account)
-    end
   end
+end
 
 
   private
@@ -32,6 +32,7 @@ class Atm
     return_success_message(amount)
   end
 
+
   def lower_atm_funds(amount)
     @funds -= amount
   end
@@ -41,7 +42,19 @@ class Atm
   end
 
   def return_success_message(amount)
-    { status: true, message: 'success', date: Date.today, amount: amount}
+    { status: true, message: 'success', date: Date.today, amount: amount, bills: add_bills(amount) }
+  end
+
+  def add_bills(amount)
+    denominations = [20, 10, 5]
+    bills = []
+    denominations.each do |bill|
+      while amount - bill >= 0
+        amount -= bill
+        bills << bill
+      end
+    end
+    bills
   end
 
   def insufficient_funds_in_atm?(amount)
