@@ -22,7 +22,6 @@ describe Account do
   end
 
   it 'deactivates account using class method' do
-    binding.pry
     subject.deactivate
     expect(subject.account_status).to eq :deactivated
   end

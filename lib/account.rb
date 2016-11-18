@@ -15,11 +15,11 @@ class Account
     @account_status = :deactivated
   end
 
-def set_expire_date
-  Date.today.next_year(STANDARD_VALIDITY_YRS).strftime('%m/%y')
-end
-
   private
+
+  def set_expire_date
+    Date.today.next_year(STANDARD_VALIDITY_YRS).strftime('%m/%y')
+  end
 
   def set_owner(obj)
     obj == nil ? missing_owner : @owner = obj
