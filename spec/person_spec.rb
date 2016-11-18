@@ -1,6 +1,6 @@
 require './lib/person.rb'
 require './lib/atm.rb'
-
+require './lib/account.rb'
 
 describe Person do
 subject { described_class.new(name: 'Kristoffer') }

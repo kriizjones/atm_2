@@ -6,7 +6,7 @@ class Person
   def initialize(attrs = {})
     @name = (attrs[:name])
     @cash = 0
-    
+    @account = nil
 
     if @name == nil
     raise 'a name is required'
@@ -14,7 +14,12 @@ class Person
   end
 
   def create_account
-    @account = account.new(owner: self)
-  # skapa subject.account som en instance av Account class.
+    @account = Account.new(owner: self)
   end
+
+  def deposit(amount)
+  @account == nil
+  end
+
+
 end
