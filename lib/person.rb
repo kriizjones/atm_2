@@ -21,5 +21,7 @@ class Person
   @account == nil
   end
 
-
+def withdraw(args = {})
+  @account == nil
+  end
 end
