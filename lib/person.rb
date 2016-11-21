@@ -18,7 +18,7 @@ class Person
   end
 
   def deposit(amount)
-  @account == nil
+    @account.balance = @account.balance + amount
   end
 
 def withdraw(args = {})
