@@ -1,6 +1,6 @@
 require './lib/atm.rb'
   describe Atm do
-  let(:account) { class_double('Account', pin_code: '1234', exp_date: '04/17') }
+  let(:account) { instance_double('Account', pin_code: '1234', exp_date: '04/17') }
   before do
     allow(account).to receive(:balance).and_return(100)
     allow(account).to receive(:balance=)
